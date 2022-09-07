@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import User from '../interfaces/user'
 
 const userSchema = new mongoose.Schema<User>({
+   _id : {required: false, type: Schema.Types.ObjectId},
   username: String,
   email: String,
   password: {type: String, required: true},
