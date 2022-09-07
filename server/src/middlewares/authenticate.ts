@@ -25,7 +25,6 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
       _id: payload._id,
       username: payload.username,
       active: payload.active,
-      birthday: payload.birthday,
       email: payload.active,
       firstName: payload.active,
       lastName: payload.lastName,

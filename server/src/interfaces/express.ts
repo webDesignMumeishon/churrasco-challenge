@@ -1,9 +1,9 @@
-import User from "./user";
+import User, {UserContext} from "./user";
 
 declare global {
   namespace Express {
     export interface Request {
-      user?: User
+      user?: UserContext
     }
   }
 }

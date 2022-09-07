@@ -23,7 +23,9 @@ export const login = async( req: Request, res: Response ) => {
     }
 
     //don't send the whole user
-    const token = signJWT({...userInstance});
+    const token = userInstance.generateAuthToken();
+
+    console.log(token)
 
     return res.status(202).send({ token })
 

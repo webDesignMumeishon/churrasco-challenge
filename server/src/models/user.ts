@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import User from '../interfaces/user'
+import jwt, {JwtPayload} from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema<User>({
    _id : {
@@ -27,5 +28,13 @@ const userSchema = new mongoose.Schema<User>({
   lastName: String,
   birthday: Date
 });
+
+userSchema.methods.generateAuthToken = async function () {
+
+  const JWT_KEY = process.env.JWT_SECRET_KEY || 'SUPER_SECRET_KEY';
+  const user = this
+  const token = jwt.sign(user, JWT_KEY, { expiresIn: '7d' })
+  return token
+}
 
 export const User = mongoose.model('User', userSchema);

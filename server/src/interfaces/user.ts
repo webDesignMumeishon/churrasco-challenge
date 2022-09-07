@@ -12,4 +12,17 @@ export default interface IUser {
   firstName: string,
   lastName: string,
   birthday: Date
+  generateAuthToken: () => string;
+}
+
+export interface UserContext {
+  _id?: ObjectId,
+  username: string,
+  email: string,
+  password: string,
+  lastLogin: Date,
+  role: Role,
+  active: boolean,
+  firstName: string,
+  lastName: string,
 }
