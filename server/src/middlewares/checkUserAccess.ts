@@ -18,6 +18,7 @@ export const checkUserAccess = (req: Request, res: Response, next: NextFunction)
       return res.status(401).send({ msg: 'Expired token.' })
     }
 
+    // @ts-ignore
     req.user = { 
       id: payload.id,
     }
