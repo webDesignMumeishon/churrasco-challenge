@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getUserByLogin } from '../services/user'
-import { compare, signJWT } from "../utils";
+import { compare } from "../utils";
 import {Role} from '../enums/index'
 
 export const login = async( req: Request, res: Response ) => {
@@ -21,12 +21,8 @@ export const login = async( req: Request, res: Response ) => {
     if(userInstance.role !== Role.ADMIN || !userInstance.active){
       return res.status(403).send({ msg: "Insufficient access" })
     }
-
-    //don't send the whole user
     const token = userInstance.generateAuthToken();
-
-    console.log(token)
-
+    
     return res.status(202).send({ token })
 
   } catch (e) {

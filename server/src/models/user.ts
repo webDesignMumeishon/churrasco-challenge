@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
-import User from '../interfaces/user'
+import IUser from '../interfaces/user'
 import jwt, {JwtPayload} from 'jsonwebtoken';
 
-const userSchema = new mongoose.Schema<User>({
+const userSchema = new mongoose.Schema<IUser>({
    _id : {
     required: false, 
     type: Schema.Types.ObjectId
@@ -29,11 +29,9 @@ const userSchema = new mongoose.Schema<User>({
   birthday: Date
 });
 
-userSchema.methods.generateAuthToken = async function () {
-
+userSchema.methods.generateAuthToken = function () {
   const JWT_KEY = process.env.JWT_SECRET_KEY || 'SUPER_SECRET_KEY';
-  const user = this
-  const token = jwt.sign(user, JWT_KEY, { expiresIn: '7d' })
+  const token = jwt.sign({id: this._id}, JWT_KEY, { expiresIn: '7d' })
   return token
 }
 

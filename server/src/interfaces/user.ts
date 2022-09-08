@@ -16,5 +16,5 @@ export default interface IUser {
 }
 
 export interface UserContext {
-  _id: ObjectId,
+  id: ObjectId,
 }
