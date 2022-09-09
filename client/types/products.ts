@@ -1,21 +1,21 @@
 export interface GetProductsResult {
-    list : IProducts
+  list: IProducts;
 }
 
 export interface IProducts {
-    products: IProduct[];
+  products: Array<IProduct>;
 }
 
 export interface IProduct {
-    SKU?:         string;
-    code?:        number | null;
-    name?:        string;
-    description?: null | string;
-    pictures?:    string[];
-    price?:       number;
-    currency?:    string;
-    __v?:         number;
-    sku?:         string;
-    createdAt?:   Date;
-    updatedAt?:   Date;
+  SKU?: string;
+  code?: number | null;
+  name?: string;
+  description?: null | string;
+  pictures?: string[];
+  price?: number;
+  currency?: string;
+  __v?: number;
+  sku?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
