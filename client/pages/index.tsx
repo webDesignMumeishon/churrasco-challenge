@@ -6,17 +6,41 @@ import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
+
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../store'
+import { setAuthState, selectAuthState } from '../slices/authSlice'
+
+
 const Home: NextPage = () => {
 
   const router = useRouter()
 
-  const [isLogged, setIsLogged] = useState<boolean>(false)
+  const authState = useSelector(selectAuthState);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if(isLogged){
-      router.push('/products')
-    }
-  },[isLogged])
+  // const [isLogged, setIsLogged] = useState<boolean>(false)
+
+  // useEffect(() => {
+  //   if (isLogged) {
+  //     router.push('/products')
+  //   }
+  // }, [isLogged])
+
+  // export const getServerSideProps = wrapper.getServerSideProps(
+  //   (store) =>
+  //     async ({ params }) => {
+  //       // we can set the initial state from here
+  //       // we are setting to false but you can run your custom logic here
+  //       await store.dispatch(setAuthState(false));
+  //       console.log("State on server", store.getState());
+  //       return {
+  //         props: {
+  //           authState: false,
+  //         },
+  //       };
+  //     }
+  // );
 
   return (
     <div className={styles.container}>
@@ -29,23 +53,28 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <img className={styles.churrascoLogo} src="/churrasco-logo.png" alt="" />
 
+
         <form action="" className={styles.login}>
-
           <div className={styles.inputContainer}>
-            <span className={styles.inputIcon}><FaUser/></span>
-            <input className={styles.loginInput} type="text" placeholder='Username'/>
+            <span className={styles.inputIcon}><FaUser /></span>
+            <input className={styles.loginInput} type="text" placeholder='Username' />
           </div>
 
           <div className={styles.inputContainer}>
-            <span className={styles.inputIcon}><RiLockPasswordFill/></span>
-            <input className={styles.loginInput}  type="text" placeholder='Password'/>
+            <span className={styles.inputIcon}><RiLockPasswordFill /></span>
+            <input className={styles.loginInput} type="text" placeholder='Password' />
           </div>
 
-        </form> 
+        </form>
       </main>
 
       <footer className={styles.footer}>
-        <p>
+        <p onClick={
+          () =>
+            authState
+              ? dispatch(setAuthState(false))
+              : dispatch(setAuthState(true))
+        }>
           web services under your control
         </p>
       </footer>
