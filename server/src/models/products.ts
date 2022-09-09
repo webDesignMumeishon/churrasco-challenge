@@ -4,7 +4,7 @@ import IProduct from '../interfaces/products'
 const productSchema = new mongoose.Schema<IProduct>({
     code: Number,
     description: String,
-    SKU: {type: String, required: true},
+    SKU: {type: String, required: true, unique: true},
     name: {type: String, required: true},
     pictures: {type: [String], required: true},
     price: {type: Number, required: true},

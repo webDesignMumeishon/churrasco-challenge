@@ -1,12 +1,13 @@
 import { HydratedDocument } from 'mongoose';
 import { encrypt } from "../utils";
+import {LoginStatus} from '../enums/index'
 
 import { User as UserSchema } from "../models/user";
 import  IUser  from "../interfaces/user";
 
 export const getUserByLogin = async (login : string) => {
     
-    return await UserSchema.findOne(
+    const user = await UserSchema.findOne(
         {
             $or: [
                 {email: login},
@@ -14,6 +15,14 @@ export const getUserByLogin = async (login : string) => {
             ]
         }
     )
+
+    if (user === null) {
+        const error = new Error('User not found')
+        error.name = LoginStatus.USER_NOT_FOUND
+        throw error
+    }
+
+    return user
 }
 
 export const insertUser = async (user: IUser) => {

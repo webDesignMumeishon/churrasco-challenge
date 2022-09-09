@@ -21,9 +21,12 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String, 
     required: true
   },
-  lastLogin: Date,
-  role: String,
-  active: Boolean,
+  active: {
+    type: Boolean, 
+    default: true
+  },
+  role: {type: String, enum: ['admin', 'customer']},
+  lastLogin: Date, //work on this
   firstName: String,
   lastName: String,
   birthday: Date

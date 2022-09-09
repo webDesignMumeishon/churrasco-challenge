@@ -3,7 +3,7 @@ import IProduct from '../interfaces/products'
 import { HydratedDocument } from 'mongoose';
 
 export const getProductsDB = async () => {
-    return await ProductSchema.find({}, {_id: 0}).exec()
+    return await ProductSchema.find({}, {_id: 0}).limit(1)
 }
 
 export const insertProductDB = async (product : IProduct) => {

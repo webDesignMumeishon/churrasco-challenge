@@ -6,7 +6,7 @@ import { checkUserAccess } from '../middlewares/checkUserAccess';
 const router = express.Router()
 
 router
-  .get('/', [checkUserAccess] , getProducts)
+  .get('/', getProducts) // add middleware back again
   .post('/', [checkUserAccess] , createProduct)
 
 
