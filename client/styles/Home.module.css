@@ -23,7 +23,8 @@
   flex-direction: column;
   justify-content: center;
   min-width: 230px;
-  height: 90px;
+  /* height: 90px; */
+  position: relative;
   border-radius: 5px;
 }
 
@@ -49,7 +50,7 @@
   margin: auto;
   background-color: #FFFFFF;
   border: none;
-  height: 40px;
+  height: 50px;
   width: 80%;
 }
 
@@ -61,6 +62,31 @@
   top: 3px;
   padding: 5px;
   position: relative;
+}
+
+.btnCheckboxWrapper{
+  position: absolute;
+  bottom: -50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.btnCheckboxWrapper > label {
+  color: #6d5d74;
+}
+
+.loginBtn{
+  right: 0;
+  background-color: #3c357a;
+  border: none;
+  padding: 10px;
+  color: #FFFFFF;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .footer {

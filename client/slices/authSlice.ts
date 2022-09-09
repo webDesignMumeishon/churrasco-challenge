@@ -1,35 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
+import { AppState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
 
-// Define a type for the slice state
-// Type for our state
 export interface AuthState {
   authState: boolean;
 }
 
-// Initial state
 const initialState: AuthState = {
   authState: false,
 };
 
 export const authSlice = createSlice({
-  name: "state",
-  // `createSlice` will infer the state type from the `initialState` argument
+  name: "auth",
   initialState,
   reducers: {
     setAuthState(state, action) {
+      // if(action.payload){
+      //   localStorage.setItem("reduxAuthState", JSON.stringify(store.getState()));
+      // }
+
       state.authState = action.payload;
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
+
+    // Special reducer for hydrating the state. Special case for next-redux-wrapper
+    extraReducers: {
+      // @ts-ignore
+      [HYDRATE]: (state, action) => {
+        return {
+          ...state,
+          ...action.payload.auth,
+        };
+      },
+    },
   },
 });
 
 export const { setAuthState } = authSlice.actions;
 
-export const selectAuthState = (state: RootState) => state.auth.authState;
+export const selectAuthState = (state: AppState) => state.auth.authState;
 
 export default authSlice.reducer;
