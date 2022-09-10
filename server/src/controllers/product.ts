@@ -39,24 +39,27 @@ const postProductSchema = Joi.object()
 
 export const createProduct = async( req: Request, res: Response ) => {
   try{
-
     const productFields = req.body
-
     const {files} = req
-
     if (!files) throw new Error('Images are required')
 
+    const fileFormat = files[0].mimetype.split('/')[1]
+
+    const base64Values : string[] = []
+
+    for (let i = 0; i < files.length; i++) {
+      const { base64 } = bufferToDataURI(fileFormat, files[i].buffer)
+      base64Values.push(base64)
+    }
+    
     const validator = new Validator<IProduct>(postProductSchema);
     if (!validator.validate(productFields)) {
       res.status(400).send(validator.getError().details);
     }
 
-    const fileFormat = files[0].mimetype.split('/')[1]
-    const { base64 } = bufferToDataURI(fileFormat, files[0].buffer)
-    const imageDetails = await uploadToCloudinary(base64, fileFormat)
-
+    //this should be an array with strings [url, url, url]
+    const listOfUrls = await uploadToCloudinary(base64Values, fileFormat)
     const createdProduct = await insertProductDB(productFields)
-
     return res.status(201).json(createdProduct)
   }
   catch(e){

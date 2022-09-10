@@ -1,7 +1,7 @@
-import  { bufferToDataURI } from '../utils/file'
+import { bufferToDataURI } from '../utils/file'
 
-import  multer from "multer"
-import {v2 as cloudinary } from "cloudinary"
+import multer from "multer"
+import { v2 as cloudinary } from "cloudinary"
 // const { ErrorHandler } = require("../utils/errorHandler");
 
 // @ts-ignore
@@ -18,7 +18,7 @@ export const upload = multer({
   storage: memoryStorage,
 });
 
-export const uploadToCloudinary = async (fileString, format) => {
+export const uploadToCloudinary = async (fileString: string[], format) => {
   try {
 
     const options = {
@@ -26,19 +26,19 @@ export const uploadToCloudinary = async (fileString, format) => {
       unique_filename: false,
       overwrite: true,
     };
-    
+
     // @ts-ignore
     const { uploader } = cloudinary;
-    
-    console.log(1)
-    console.log(process.env.CLOUDINARY_API_KEY, uploader)
 
-    const res = await uploader.upload(
-      `data:image/${format};base64,${fileString}`,
-      options
-    );
+    const uploadImages = fileString.map(async (f) => {
+      return await uploader.upload(
+        `data:image/${format};base64,${f}`,
+        options
+      );
+    })
 
-    return res;
+    return await Promise.all(uploadImages)
+
   } catch (error) {
     throw new Error(error);
   }
