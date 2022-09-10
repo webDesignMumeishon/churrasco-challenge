@@ -49,14 +49,6 @@
   padding: 0.5em 0;
 }
 
-.textareaWrapper > p > span {
-  font-weight: 500;
-  padding: 1px 5px;
-  background: #FFA500;
-  border-radius: 8px;
-  margin-left: 5px;
-}
-
 .textareaInput{
   width: 100%;
   border-width: 3px;
@@ -68,4 +60,21 @@
 
 .textareaInput:focus{
   outline: none;
+}
+
+.submitBtn{
+  background: linear-gradient( 356deg, #9932ccb0 0%, #1e008bb8 33%, #9932cca1 100% );
+  opacity: 1;
+  display: block;
+  width: 100%;
+  padding: 6px;
+  font-size: 18px;
+  margin-top: 15px;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.submitBtn:hover{
+  opacity: .9;
 }

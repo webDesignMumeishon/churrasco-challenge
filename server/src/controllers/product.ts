@@ -45,7 +45,7 @@ export const createProduct = async( req: Request, res: Response ) => {
 
     const createdProduct = await insertProductDB(productFields)
 
-    return res.status(201).send(createdProduct)
+    return res.status(201).json(createdProduct)
   }
   catch(e){
     console.log(e)
