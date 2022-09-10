@@ -8,32 +8,37 @@ import { selectAuthState } from '../slices/authSlice'
 import ListProducts from '../components/ListProducts'
 
 const Products: NextPage<{ list: IProducts }> = ({ list }: any) => {
-    const router = useRouter()
-    const authState: boolean = useSelector(selectAuthState);
+  const router = useRouter()
+  const authState: boolean = useSelector(selectAuthState);
 
-    useEffect(() => {
-        if (!authState) {
-            router.push('/')
-        }
-    }, [])
+  const handleClick = () => {
+    // move to route add-product
+  }
 
-    return (
-        <div>
-            <h1>Hello from products</h1>
-            <ListProducts products={list} />
-        </div>
-    )
+  useEffect(() => {
+    authState
+      ? router.push('/products')
+      : router.push('/')
+  }, [])
+
+  return (
+    <div>
+      <h2 className='text-white font-bold text-2xl text-center w-full p-3'>Products</h2>
+      <ListProducts products={list} />
+      <button onClick={ handleClick } className='absolute p-2 px-3 hover:bg-neutral-400 top-2 right-5 rounded-md bg-neutral-300'>Add product</button>
+    </div>
+  )
 }
 
 export default Products
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const result = await fetch("http://localhost:4000/product")
-    const { products }: IProducts = await result.json()
+  const result = await fetch("http://localhost:4000/product")
+  const { products }: IProducts = await result.json()
 
-    return {
-        props: {
-            list: products
-        }
+  return {
+    props: {
+      list: products
     }
+  }
 }
