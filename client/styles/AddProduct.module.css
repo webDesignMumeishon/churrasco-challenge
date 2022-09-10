@@ -39,9 +39,26 @@
   align-items: center;
 }
 
+.textareaWrapper{
+  margin-top: 15px;
+  width: 100%;
+}
+
+.textareaWrapper > p {
+  font-weight: 700;
+  padding: 0.5em 0;
+}
+
+.textareaWrapper > p > span {
+  font-weight: 500;
+  padding: 1px 5px;
+  background: #FFA500;
+  border-radius: 8px;
+  margin-left: 5px;
+}
+
 .textareaInput{
   width: 100%;
-  margin-top: 20px;
   border-width: 3px;
   border-radius: 5px;
   border-image: linear-gradient(to right, darkblue, darkorchid) 1;

@@ -1,27 +1,52 @@
-import { ChangeEvent, MouseEventHandler, useState } from "react"
+import styles from '../styles/Currency.module.css'
 
+type props = {
+    handleCurrencyOnChange : (e : any) => void
+}
 
+const Currency : React.FC<props> = ({handleCurrencyOnChange}) => {
 
-const Currency = () => {
-
-    const [checkedUSD, setCheckedUSD] = useState<boolean>(true)
-
-
-    const handleCurrencyOnChange = (e: any)  => {
-        console.log(e.target)
+    enum ECurrency {
+        USD = 'USD',
+        EUR = 'EUR',
+        PEN = 'PEN'
     }
 
     return (
-        <div>
-            <input type="radio" id="usd" name="currency" value="USD" onClick={handleCurrencyOnChange} checked={checkedUSD}/>
-            <label htmlFor="usd">USD</label>
+        <div className={styles.checkboxContainer}>
+      
+        <label htmlFor="usd">
+            <input 
+                type="radio" 
+                id="usd" 
+                name="currency" 
+                value={ECurrency.USD} 
+                onClick={handleCurrencyOnChange} 
+                defaultChecked
+            />USD
+        </label>
 
-            <input type="radio" id="eur" name="currency" value="EUR" onClick={handleCurrencyOnChange} />
-            <label htmlFor="eur">EUR</label>
-
-            <input type="radio" id="pen" name="currency" value="PEN" onClick={handleCurrencyOnChange} />
-            <label htmlFor="pen">PEN</label>
-        </div>
+       
+        <label htmlFor="eur">
+            <input 
+                type="radio" 
+                id="eur" 
+                name="currency" 
+                value={ECurrency.EUR} 
+                onClick={handleCurrencyOnChange} 
+            />EUR
+        </label>
+       
+        <label htmlFor="pen">
+            <input 
+                type="radio" 
+                id="pen" 
+                name="currency" 
+                value={ECurrency.PEN} 
+                onClick={handleCurrencyOnChange} 
+            />PEN
+        </label>
+    </div>
     )
 }
 
