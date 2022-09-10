@@ -1,0 +1,54 @@
+.container{
+  display: flex;
+  height: 95vh; 
+}
+
+.formContainer{
+  background-color: #FFFFFF;
+  padding: 2em;
+  border-radius: 5px;
+  margin: auto;
+  width: 600px;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center; 
+}
+
+.formContainer > h2{
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.formContainer > h2::after{
+  background-color: #3c357a;
+  content: "";
+  display: inline-block;
+  height: 5px;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+  bottom: 50%;
+}
+
+.mainForm{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.textareaInput{
+  width: 100%;
+  margin-top: 20px;
+  border-width: 3px;
+  border-radius: 5px;
+  border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+  font-family: inherit;
+  padding: 1em;
+}
+
+.textareaInput:focus{
+  outline: none;
+}

@@ -59,7 +59,6 @@ const Home: NextPage = () => {
     )
   }
 
-
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     const request = {
