@@ -2,8 +2,12 @@ import { Request, Response } from "express";
 import Joi from 'joi';
 
 import { getProductsDB, insertProductDB } from '../services/product'
+
+import { uploadToCloudinary } from '../services/upload'
+
 import Validator from '../utils/joi_validator'
 import IProduct from "../interfaces/products";
+import { bufferToDataURI } from "../utils/file";
 
 
 export const getProducts = async( req: Request, res: Response ) => {
@@ -34,14 +38,22 @@ const postProductSchema = Joi.object()
   .unknown(true);
 
 export const createProduct = async( req: Request, res: Response ) => {
-
   try{
-    
+
     const productFields = req.body
+
+    const {files} = req
+
+    if (!files) throw new Error('Images are required')
+
     const validator = new Validator<IProduct>(postProductSchema);
     if (!validator.validate(productFields)) {
       res.status(400).send(validator.getError().details);
     }
+
+    const fileFormat = files[0].mimetype.split('/')[1]
+    const { base64 } = bufferToDataURI(fileFormat, files[0].buffer)
+    const imageDetails = await uploadToCloudinary(base64, fileFormat)
 
     const createdProduct = await insertProductDB(productFields)
 
