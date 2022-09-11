@@ -6,6 +6,7 @@ import { compare } from "../utils/handleBcrypt";
 import {Role} from '../enums/index'
 import Validator from '../utils/joi_validator'
 import {LoginStatus} from '../enums/index'
+import CustomError from '../utils/errorHandler'
 
 const postLoginSchema = Joi.object()
   .keys({
@@ -20,12 +21,10 @@ interface LoginKeys {
   password: string;
 }
 
-export const login = async( req: Request, res: Response ) => {
+export const login = async( req: Request, res: Response, next ) => {
 
   try{
-
     const bodyFields = req.body
-
     const validator = new Validator<LoginKeys>(postLoginSchema);
 
     if (!validator.validate(bodyFields)) {
@@ -34,46 +33,34 @@ export const login = async( req: Request, res: Response ) => {
 
     let userInstance = await getUserByLogin(bodyFields.login)
 
-    checkPassword(bodyFields.password, userInstance.password)
+    if (userInstance === null) {
+      throw new CustomError('User not found', 403)
+    }
 
-    isAdmin(userInstance.role, userInstance.active)
+    if (!compare(bodyFields.password, userInstance.password)) {
+      throw new CustomError('Invalid password', 404)
+    }
+
+    isAdminAndIsActive(userInstance.role, userInstance.active)
 
     const token = userInstance.generateAuthToken();
     
     return res.status(202).json({ token })
 
   } catch (err) {
-
-    if(LoginStatus.USER_NOT_FOUND === err.name){
-      return res.status(404).json({ msg: err.message})
-    }
-
-    else if(LoginStatus.USER_NOT_ADMIN === err.name){
-      return res.status(403).json({ msg: err.message})
-    }
-
-    else if(LoginStatus.INVALID_PASSWORD === err.name){
-      return res.status(404).json({ msg: err.message})
-    }
-
-    res.status(500).json({ msg: 'Error produced during petition'})
+    next(err)
   }
-
 }
 
-const isAdmin = (role : Role, active : boolean) : void => {
+const isAdminAndIsActive = (role : Role, active : boolean) : void => {
+
   if(role !== Role.ADMIN || !active){
-    const message = role !== Role.ADMIN ? 'User is not an admin' : 'User is not active'
-    const error = new Error(message)
-    error.name = LoginStatus.USER_NOT_ADMIN
-    throw error
+    throw new CustomError('User is not an admin', 403)
+  }
+
+  if(!active){
+    throw new CustomError('User is not active', 403)
   }
 }
 
-const checkPassword = (password : string, hashedPassword : string) : void => {
-  if (!compare(password, hashedPassword)) {
-    const error = new Error('Invalid password')
-    error.name = LoginStatus.INVALID_PASSWORD
-    throw error
-  }
-}
+

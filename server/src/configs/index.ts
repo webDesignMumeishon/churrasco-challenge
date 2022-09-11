@@ -3,6 +3,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import "reflect-metadata"
 import dotenv from 'dotenv';
+import handleError from '../middlewares/error-hanlder'
 
 
 dotenv.config();
@@ -18,6 +19,4 @@ export default (app: Express) => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
   app.use(cors())
-
-
 }

@@ -16,11 +16,7 @@ export const getUserByLogin = async (login : string) => {
         }
     )
 
-    if (user === null) {
-        const error = new Error('User not found')
-        error.name = LoginStatus.USER_NOT_FOUND
-        throw error
-    }
+
 
     return user
 }
