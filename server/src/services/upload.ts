@@ -29,7 +29,7 @@ export const uploadToCloudinary = async (fileString: string[], format) => {
 
     // @ts-ignore
     const { uploader } = cloudinary;
-
+    
     const uploadImages = fileString.map(async (f) => {
       return await uploader.upload(
         `data:image/${format};base64,${f}`,
@@ -37,7 +37,9 @@ export const uploadToCloudinary = async (fileString: string[], format) => {
       );
     })
 
-    return await Promise.all(uploadImages)
+    const imagesUrls = await Promise.all(uploadImages)
+    
+    return imagesUrls.map(image => image.url)
 
   } catch (error) {
     throw new Error(error);

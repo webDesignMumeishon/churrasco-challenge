@@ -14,7 +14,7 @@ export const insertProductDB = async (product : IProduct, picturesUrls? : string
         name: product.name,
         description: product.name,
         pictures: picturesUrls,
-        price: product.price,
+        price: Number(product.price),
         currency: product.currency
     });
 

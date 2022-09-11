@@ -1,5 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
+import React from 'react'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import axios from 'axios'
 
 import Currency from '../components/Currency'
 import FieldInput from '../components/FieldInput'
@@ -25,6 +27,8 @@ const AddProduct: NextPage = () => {
     // states
     const [currency, setCurrency] = useState<string>('USD')
     const [textAreaValue, setTextAreaValue] = useState<string>('')
+    const [filesList, setFilesList] = useState<any>(null)
+
     const [productInputs, setProductsInputs] = useState<IProductInput>({
         sku: '',
         code: '',
@@ -51,6 +55,24 @@ const AddProduct: NextPage = () => {
         })
     }
 
+    const handleOnChangeFile = (e : any) => {
+        const files = e.target.files
+        console.log('File uploaded ====>', files)
+        setFilesList([...files])
+        // previewFile(file)
+    }
+
+    // const previewFile = (file: Blob) => {
+    //     const reader = new FileReader()
+
+    //     //Convierte la imagen en url
+    //     reader.readAsDataURL(file)
+
+    //     reader.onloadend = () => {
+    //        console.log('ok', reader)
+    //     }
+    // }
+
     const handleOnSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
@@ -59,20 +81,33 @@ const AddProduct: NextPage = () => {
             code: productInputs.code,
             name: productInputs.name,
             description: textAreaValue,
-            pictures: [],
+            pictures: filesList,
             price: productInputs.price,
             currency
         }
+        console.log(filesList)
+
+        const formData = new FormData()
+
+        filesList.forEach((file : any) => {
+            formData.append('image', file, file.name)
+        });
+        formData.append('SKU', productInputs.sku)
+        formData.append('code', productInputs.code)
+        formData.append('name', productInputs.name)
+        formData.append('description', textAreaValue)
+        formData.append('price', productInputs.price.toString())
+        formData.append('currency', currency)
 
         const request = {
-          headers: {
-            'Content-Type': 'application/json'
-          },
           method: 'POST',
-          body: JSON.stringify(bodyData)
+          body: formData,
         };
-
+        
         const response : Response = await fetch("http://localhost:4000/product", request);
+        // const res = await axios.post("http://localhost:4000/product", formData)
+
+        console.log(response)
     }
 
     return (
@@ -117,7 +152,12 @@ const AddProduct: NextPage = () => {
                         </textarea>
                     </div>
                     <Currency handleCurrencyOnChange={handleCurrencyOnChange} />
-                    <button type='submit' className={styles.submitBtn}>Submit</button>
+
+
+                    <input type="file" name="image" id="image" multiple onChange={handleOnChangeFile}/>
+
+
+                    <button type='submit' name='image' className={styles.submitBtn}>Submit</button>
                 </form>
             </div>
         </div>
