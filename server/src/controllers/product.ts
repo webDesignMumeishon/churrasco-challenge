@@ -2,27 +2,22 @@ import { Request, Response } from "express";
 import Joi from 'joi';
 
 import { getProductsDB, insertProductDB } from '../services/product'
-
 import { uploadToCloudinary } from '../services/upload'
-
 import Validator from '../utils/joi_validator'
 import IProduct from "../interfaces/products";
 import { bufferToDataURI } from "../utils/file";
 import CustomError from '../utils/errorHandler'
 
 
-export const getProducts = async( req: Request, res: Response ) => {
-
+export const getProducts = async( req: Request, res: Response, next ) => {
   try{
     return res.send({
       products: await getProductsDB()
     })
     
   } catch (e) {
-    console.log(e)
-    res.status(500).send({ msg: 'Error produced during petition' })
+    next(e)
   }
-
 }
 
 const postProductSchema = Joi.object()
@@ -46,7 +41,7 @@ export const createProduct = async ( req: Request, res: Response, next: any) => 
     if (!files) {
       throw new CustomError('Images are required', 400)
     }
-    
+
     const validator = new Validator<IProduct>(postProductSchema);
     if (!validator.validate(productFields)) {
       throw new CustomError(JSON.stringify(validator.getError().details), 400)

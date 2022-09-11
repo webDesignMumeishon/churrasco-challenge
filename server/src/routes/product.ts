@@ -7,10 +7,8 @@ import { checkUserAccess } from '../middlewares/checkUserAccess';
 const router = express.Router()
 
 router
-  .get('/', getProducts) // add middleware back again
-  // .post('/', [checkUserAccess] , createProduct)
-  .post('/' , upload.array('image'), createProduct)
-
+  .get('/',[checkUserAccess], getProducts)
+  .post('/', [checkUserAccess, upload.array('image')] , createProduct)
 
 export default router
   
