@@ -7,6 +7,7 @@ import {Role} from '../enums/index'
 import Validator from '../utils/joi_validator'
 import {LoginStatus} from '../enums/index'
 import CustomError from '../utils/errorHandler'
+import { serialize } from "cookie";
 
 const postLoginSchema = Joi.object()
   .keys({
@@ -45,6 +46,11 @@ export const login = async( req: Request, res: Response, next ) => {
 
     const token = userInstance.generateAuthToken();
     
+    const serialised = serialize('OursiteJWT', token, {
+      httpOnly: true,
+    })
+
+    res.setHeader('Set-Cookie', serialised)
     return res.status(202).json({ token })
 
   } catch (err) {

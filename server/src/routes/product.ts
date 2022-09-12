@@ -7,7 +7,7 @@ import { checkUserAccess } from '../middlewares/checkUserAccess';
 const router = express.Router()
 
 router
-  .get('/',[checkUserAccess], getProducts)
+  .get('/' ,[checkUserAccess], getProducts)
   .post('/', [checkUserAccess, upload.array('image')] , createProduct)
 
 export default router

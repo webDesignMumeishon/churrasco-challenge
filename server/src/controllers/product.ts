@@ -10,6 +10,7 @@ import CustomError from '../utils/errorHandler'
 
 
 export const getProducts = async( req: Request, res: Response, next ) => {
+
   try{
     return res.send({
       products: await getProductsDB()
@@ -35,8 +36,10 @@ const postProductSchema = Joi.object()
 export const createProduct = async ( req: Request, res: Response, next: any) => {
   try{
 
+
     const productFields = req.body
     const {files} = req
+
     
     if (!files) {
       throw new CustomError('Images are required', 400)
