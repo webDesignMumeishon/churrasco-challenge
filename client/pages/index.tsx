@@ -11,6 +11,7 @@ import styles from '../styles/Home.module.css'
 import { IUser } from "../types/user"
 import { wrapper } from '../store'
 import { setAuthState, selectAuthState } from '../slices/authSlice'
+import axios from 'axios'
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store: { dispatch: (arg0: { payload: any; type: string }) => any; getState: () => any }) =>
@@ -35,13 +36,13 @@ const Home: NextPage = () => {
   const authState: boolean = useSelector(selectAuthState);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const localItem = localStorage.getItem('reduxAuthState');
-    if (localItem !== null) {
-      dispatch(setAuthState(true))
-      router.push('/products')
-    }
-  }, [authState])
+  // useEffect(() => {
+  //   const localItem = localStorage.getItem('reduxAuthState');
+  //   if (localItem !== null) {
+  //     dispatch(setAuthState(true))
+  //     router.push('/products')
+  //   }
+  // }, [authState])
 
 
   const [logUser, setLogUser] = useState<IUser>({
@@ -61,19 +62,33 @@ const Home: NextPage = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
-    const request = {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify(logUser)
-    };
-    const response = await fetch("http://localhost:4000/login", request);
-    const data: any = await response.json()
+    // const request = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     // credentials: 'include',
+    //     // mode: 'same-origin',
+    //   },
+    //   withCredentials: true,
+    //   method: 'POST',
+    //   body: JSON.stringify(logUser)
+    // };
+    // const response = await fetch("http://localhost:4000/login", request);
+    // const data: any = await response.json()
 
-    if (data.token) {
-      localStorage.setItem("reduxAuthState", JSON.stringify(data.token))
+    const data = await axios.post("http://localhost:4000/login", logUser, {
+      withCredentials: true,
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+
+    console.log(data)
+
+
+    if (data) {
+      // localStorage.setItem("reduxAuthState", JSON.stringify(data.token))
       dispatch(setAuthState(true))
+      // maybe [ush to /products here ?
     }
   }
 

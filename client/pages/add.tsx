@@ -57,21 +57,9 @@ const AddProduct: NextPage = () => {
 
     const handleOnChangeFile = (e : any) => {
         const files = e.target.files
-        console.log('File uploaded ====>', files)
         setFilesList([...files])
-        // previewFile(file)
     }
 
-    // const previewFile = (file: Blob) => {
-    //     const reader = new FileReader()
-
-    //     //Convierte la imagen en url
-    //     reader.readAsDataURL(file)
-
-    //     reader.onloadend = () => {
-    //        console.log('ok', reader)
-    //     }
-    // }
 
     const handleOnSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
@@ -85,8 +73,6 @@ const AddProduct: NextPage = () => {
             price: productInputs.price,
             currency
         }
-        console.log(filesList)
-
         const formData = new FormData()
 
         filesList.forEach((file : any) => {
@@ -105,8 +91,6 @@ const AddProduct: NextPage = () => {
         };
         
         const response : Response = await fetch("http://localhost:4000/product", request);
-        // const res = await axios.post("http://localhost:4000/product", formData)
-
         console.log(response)
     }
 
@@ -155,8 +139,6 @@ const AddProduct: NextPage = () => {
 
 
                     <input type="file" name="image" id="image" multiple onChange={handleOnChangeFile}/>
-
-
                     <button type='submit' name='image' className={styles.submitBtn}>Submit</button>
                 </form>
             </div>
