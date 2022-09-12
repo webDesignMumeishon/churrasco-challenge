@@ -1,5 +1,3 @@
-// import {ObjectId} from 'mongoose'
-
 export default interface IProduct {
     code?: number,
     description?: string,

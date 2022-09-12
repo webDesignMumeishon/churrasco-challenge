@@ -3,7 +3,7 @@
 		"alwaysStrict": true,
 		"esModuleInterop": true,
 		"outDir": "build/",
-		"typeRoots" : ["src/interfaces", "./node_modules/@types"],
+		"typeRoots" : ["src/types/", "./node_modules/@types"],
 		"experimentalDecorators": true,
 		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true,
