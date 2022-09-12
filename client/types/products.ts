@@ -11,7 +11,7 @@ export interface IProduct {
   code?: number | null;
   name?: string;
   description?: null | string;
-  pictures?: string[];
+  pictures: string[];
   price?: number;
   currency?: string;
   __v?: number;

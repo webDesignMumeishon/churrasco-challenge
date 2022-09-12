@@ -7,6 +7,7 @@ import Currency from '../components/Currency'
 import FieldInput from '../components/FieldInput'
 import OptionalTag from '../components/OptionalTag'
 import styles from '../styles/AddProduct.module.css'
+import Header from '../components/Header';
 
 
 interface IProductInput {
@@ -17,12 +18,6 @@ interface IProductInput {
 }
 
 const AddProduct: NextPage = () => {
-
-    // useEffect(() => {
-    //     if (!authState) {
-    //         router.push('/')
-    //     }
-    // }, [])
 
     // states
     const [currency, setCurrency] = useState<string>('USD')
@@ -88,61 +83,78 @@ const AddProduct: NextPage = () => {
         const request = {
           method: 'POST',
           body: formData,
+          withCredentials: true,
+
         };
-        
-        const response : Response = await fetch("http://localhost:4000/product", request);
-        console.log(response)
+
+        const response = await axios.post("http://localhost:4000/product", formData,{
+            withCredentials: true,
+        })
+
+        if(response.status === 201){
+            setCurrency('USD')
+            setTextAreaValue('')
+            setFilesList(null)
+            setProductsInputs({
+                sku: '',
+                code: '',
+                name: '',
+                price: 0
+            })
+            alert('Product was created')
+        }
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.formContainer}>
-                <h2>Add Product</h2>
-                <form className={styles.mainForm} onSubmit={handleOnSubmit}>
-                    <FieldInput
-                        name={'SKU'}
-                        value={productInputs.sku}
-                        handleInput={handleInputFieldOnChange}
-                    />
-                    <FieldInput
-                        name={'Code'}
-                        opcional={true}
-                        value={productInputs.code}
-                        handleInput={handleInputFieldOnChange}
-                    />
-                    <FieldInput
-                        name={'Name'}
-                        value={productInputs.name}
-                        handleInput={handleInputFieldOnChange}
-                    />
-                    <FieldInput
-                        name={'Price'}
-                        value={productInputs.price}
-                        type={'number'}
-                        handleInput={handleInputFieldOnChange}
-                    />
+        <>
+            <Header/>
+            <div className={styles.container}>
+                <div className={styles.formContainer}>
+                    <h2>Add Product</h2>
+                    <form className={styles.mainForm} onSubmit={handleOnSubmit}>
+                        <FieldInput
+                            name={'SKU'}
+                            value={productInputs.sku}
+                            handleInput={handleInputFieldOnChange}
+                        />
+                        <FieldInput
+                            name={'Code'}
+                            opcional={true}
+                            value={productInputs.code}
+                            handleInput={handleInputFieldOnChange}
+                        />
+                        <FieldInput
+                            name={'Name'}
+                            value={productInputs.name}
+                            handleInput={handleInputFieldOnChange}
+                        />
+                        <FieldInput
+                            name={'Price'}
+                            value={productInputs.price}
+                            type={'number'}
+                            handleInput={handleInputFieldOnChange}
+                        />
 
-                    <div className={styles.textareaWrapper}>
-                        <p>
-                            Description <OptionalTag />
-                        </p>
-                        <textarea
-                            className={styles.textareaInput}
-                            name="description" rows={5}
-                            placeholder="Description"
-                            value={textAreaValue}
-                            onChange={handleTextAreaOnChange}
-                        >
-                        </textarea>
-                    </div>
-                    <Currency handleCurrencyOnChange={handleCurrencyOnChange} />
-
-
-                    <input type="file" name="image" id="image" multiple onChange={handleOnChangeFile}/>
-                    <button type='submit' name='image' className={styles.submitBtn}>Submit</button>
-                </form>
+                        <div className={styles.textareaWrapper}>
+                            <p>
+                                Description <OptionalTag />
+                            </p>
+                            <textarea
+                                className={styles.textareaInput}
+                                name="description" rows={5}
+                                placeholder="Description"
+                                value={textAreaValue}
+                                onChange={handleTextAreaOnChange}
+                            >
+                            </textarea>
+                        </div>
+                        <Currency handleCurrencyOnChange={handleCurrencyOnChange} />
+                        <input className={styles.chooseFileBtn} type="file" name="image" id="image" multiple onChange={handleOnChangeFile}/>
+                        <button type='submit' name='image' className={styles.submitBtn}>Submit</button>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

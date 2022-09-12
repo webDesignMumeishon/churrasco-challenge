@@ -1,0 +1,56 @@
+.infoContainer > p{
+    margin: 10px 0px;
+}
+
+.cardContainer{
+    width: 300px;
+    border-radius: 10px;
+    color: #000000;
+    position: relative;
+    background-color: #FFFFFF;
+    margin-bottom: 15px;
+}
+
+.imgContainer{
+    background-color: #ff3131e6;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.imgStyle{
+    width: 100%;
+    object-fit: cover;
+    height: 30vh;
+}
+
+.infoContainer{
+    display: flex;
+    padding: 0px 5px;
+    margin: auto;
+    flex-direction: column;
+    width: 80%;
+}
+
+.productName{
+    color: #FF3131;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.codeLabel{
+    background-color: chocolate;
+    padding: 3px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-left: 5px
+}
+
+.skuNumber{
+    background-color: #191919;
+    position: absolute;
+    padding: 5px;
+    right: 0;
+    border-radius: 5px;
+    color: #FFFFFF;
+}

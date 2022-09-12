@@ -1,29 +1,21 @@
-import type { GetServerSideProps, GetStaticProps, NextPage } from 'next'
-import Link from 'next/link';
-import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { IProducts } from '../types/products'
-import { selectAuthState } from '../slices/authSlice'
-import ListProducts from '../components/ListProducts'
+import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios';
+
+import Header from '../components/Header';
+import { IProducts } from '../types/products'
+import ListProducts from '../components/ListProducts'
+import { useSelector } from 'react-redux';
+import { selectAuthState } from '../slices/authSlice';
 
 
 const Products: NextPage<{ list: IProducts }> = ({ list }: any) => {
-  const router = useRouter()
   const authState: boolean = useSelector(selectAuthState);
-
-  // useEffect(() => {
-  //   authState
-  //     ? router.push('/products')
-  //     : router.push('/')
-  // }, [])
 
 
   return (
     <div>
-      <h2 className=''>Products</h2>
-      <Link href='add' className=''>Add product</Link>
+      <Header/>
+      <h2 style={{color: '#FFFFFF', textAlign: 'center'}}>Products</h2>
       <ListProducts products={list} />
     </div>
   )
@@ -35,12 +27,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
-      Cookie: context.req.cookies.OursiteJWT || '',
+      Cookie: `OursiteJWT=${context.req.cookies.OursiteJWT}` || '',
     }
   })
   
   if(result.status !== 200) {
-    console.log('what ?')
     return {
       props: {
         list: []

@@ -36,10 +36,8 @@ const postProductSchema = Joi.object()
 export const createProduct = async ( req: Request, res: Response, next: any) => {
   try{
 
-
     const productFields = req.body
     const {files} = req
-
     
     if (!files) {
       throw new CustomError('Images are required', 400)

@@ -1,6 +1,6 @@
 .container{
   display: flex;
-  height: 95vh; 
+  margin-top: 15px;
 }
 
 .formContainer{
@@ -77,4 +77,10 @@
 
 .submitBtn:hover{
   opacity: .9;
+}
+
+.chooseFileBtn{
+  background-color: transparent;
+  margin-top: 15px;
+  padding: 1em;
 }

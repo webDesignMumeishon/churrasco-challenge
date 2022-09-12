@@ -3,18 +3,22 @@ import moment from 'moment'
 
 import CustomError from '../utils/errorHandler'
 import { decodeJWT } from '../utils'
+import { Console } from "console";
 
 
 export const checkUserAccess = (req: Request, res: Response, next: NextFunction) => {
 
   try {
 
-    const cookies = req.headers.cookie
+    
+    const getCookieValue = req.headers.cookie
 
+    const cookies = getCookieValue.split('=')[1]
+    
     if (!cookies){
       throw new CustomError('Unauthorized', 401)
     }
-
+    
     const payload = decodeJWT(cookies)
 
     if (payload.exp && payload.exp <= Number(moment.now().toString().slice(0, 10))){
@@ -27,6 +31,7 @@ export const checkUserAccess = (req: Request, res: Response, next: NextFunction)
     }
 
   } catch (e) {
+    console.log(e)
     next(e)
   }
 

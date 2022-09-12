@@ -3,7 +3,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import "reflect-metadata"
 import dotenv from 'dotenv';
-var cookieParser = require('cookie-parser');
+import cookieParser from 'cookie-parser'
 
 dotenv.config();
 
