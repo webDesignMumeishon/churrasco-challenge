@@ -14,7 +14,6 @@ export interface IProduct {
   pictures: string[];
   price?: number;
   currency?: ECurrency;
-  __v?: number;
   sku?: string;
   createdAt?: Date;
   updatedAt?: Date;
