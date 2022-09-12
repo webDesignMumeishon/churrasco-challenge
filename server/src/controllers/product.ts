@@ -53,11 +53,8 @@ export const createProduct = async ( req: Request, res: Response, next: any) => 
       const { base64 } = bufferToDataURI(fileFormat, files[i].buffer)
       base64Values.push(base64)
     }
-
-    //this should be an array with strings [url, url, url]
     const listOfUrls = await uploadToCloudinary(base64Values, fileFormat)
     const createdProduct = await insertProductDB(productFields, listOfUrls)
-
     return res.status(201).json(createdProduct)
   }
   catch(e){

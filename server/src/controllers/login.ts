@@ -58,11 +58,9 @@ export const login = async( req: Request, res: Response, next ) => {
 }
 
 export const logout = async( req: Request, res: Response, next ) => {
-
   try{
     res.clearCookie("OursiteJWT");
     return res.status(200).json({msg:"cookie deleted"})
-    
   } catch (err) {
     next(err)
   }

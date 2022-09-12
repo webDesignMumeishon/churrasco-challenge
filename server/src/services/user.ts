@@ -19,6 +19,11 @@ export const getUserByLogin = async (login : string) => {
     return user
 }
 
+
+export const checkUserById = async (id : string) => {
+    return await UserSchema.findById(id)
+}
+
 export const insertUser = async (user: IUser) => {
     const insertedUser : HydratedDocument<IUser> = new UserSchema({
         username: user.username,
