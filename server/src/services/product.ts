@@ -1,5 +1,5 @@
 import { Product as ProductSchema } from "../models/products";
-import IProduct from '../interfaces/products'
+import IProduct from '../types/products'
 import { HydratedDocument } from 'mongoose';
 
 export const getProductsDB = async () => {

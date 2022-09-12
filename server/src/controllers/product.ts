@@ -4,7 +4,7 @@ import Joi from 'joi';
 import { getProductsDB, insertProductDB } from '../services/product'
 import { uploadToCloudinary } from '../services/upload'
 import Validator from '../utils/joi_validator'
-import IProduct from "../interfaces/products";
+import IProduct from "../types/products";
 import { bufferToDataURI } from "../utils/file";
 import CustomError from '../utils/errorHandler'
 
@@ -12,11 +12,9 @@ import CustomError from '../utils/errorHandler'
 export const getProducts = async( req: Request, res: Response, next ) => {
 
   try{
-    console.log(req)
     return res.send({
       products: await getProductsDB()
     })
-    
   } catch (e) {
     next(e)
   }

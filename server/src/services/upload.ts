@@ -1,8 +1,5 @@
-import { bufferToDataURI } from '../utils/file'
-
 import multer from "multer"
 import { v2 as cloudinary } from "cloudinary"
-// const { ErrorHandler } = require("../utils/errorHandler");
 
 // @ts-ignore
 cloudinary.config({
@@ -45,36 +42,3 @@ export const uploadToCloudinary = async (fileString: string[], format) => {
     throw new Error(error);
   }
 };
-
-
-// const uploadImage = async (req, res, next) => {
-//   try {
-
-//     // const { file } = req
-
-//     // if (!file) throw new ErrorHandler(400, 'Image is required')
-
-//     // const fileFormat = file.mimetype.split('/')[1]
-//     // const { base64 } = bufferToDataURI(fileFormat, file.buffer)
-
-//     // const imageDetails = await uploadToCloudinary(base64, fileFormat)
-
-//     // res.json({
-//     //   status: 'success',
-//     //   message: 'Upload successful',
-//     //   data: imageDetails,
-//     // })
-
-//   } catch (error) {
-//     next(new ErrorHandler(error.statusCode || 500, error.message))
-//   }
-// }
-
-// module.exports = {
-//     upload,
-//     uploadToCloudinary,
-// };
-
-// module.exports = {
-//   uploadImage,
-// }

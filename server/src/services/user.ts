@@ -2,7 +2,7 @@ import { HydratedDocument } from 'mongoose';
 import { encrypt } from "../utils";
 
 import { User as UserSchema } from "../models/user";
-import  IUser  from "../interfaces/user";
+import  IUser  from "../types/user";
 
 export const getUserByLogin = async (login : string) => {
     const user = await UserSchema.findOneAndUpdate(

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import IUser from '../interfaces/user'
-import jwt, {JwtPayload} from 'jsonwebtoken';
+import IUser from '../types/user'
+import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema<IUser>({
    _id : {
