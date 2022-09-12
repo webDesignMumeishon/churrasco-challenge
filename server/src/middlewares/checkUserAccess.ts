@@ -27,7 +27,6 @@ export const checkUserAccess = async (req: Request, res: Response, next: NextFun
       id: userInstanceChecked.id,
     }
   } catch (e) {
-    console.log(e)
     next(e)
   }
 
