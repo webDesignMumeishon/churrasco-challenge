@@ -1,4 +1,5 @@
 import { IProduct } from '../types/products'
+import {ECurrency} from '../types/products'
 
 import styles from '../styles/Product.module.css'
 
@@ -8,6 +9,10 @@ type props = {
 
 const Product: React.FC<props> = ({ product }) => {
   const mainImage = product?.pictures?.length > 0 ? product.pictures[0] : 'https://i.stack.imgur.com/6M513.png'
+
+  const validCurrencies = Object.values(ECurrency)
+
+  console.log(validCurrencies)
 
   return (
     <div className={styles.cardContainer}>
@@ -21,7 +26,7 @@ const Product: React.FC<props> = ({ product }) => {
       <div className={styles.infoContainer}>
           <p className={styles.productName}>{product.name}</p>
           <p>Code: <span className={styles.codeLabel}>{product.code || 'INVALID'}</span></p>
-          <p>Price: ${product.price} {product.currency} </p>
+          <p>Price: ${product.price} {validCurrencies.includes(product.currency as ECurrency) || ECurrency.PEN} </p>
       </div>
     </div>
   )

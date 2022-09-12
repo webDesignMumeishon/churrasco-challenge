@@ -13,9 +13,15 @@ export interface IProduct {
   description?: null | string;
   pictures: string[];
   price?: number;
-  currency?: string;
+  currency?: ECurrency;
   __v?: number;
   sku?: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export enum ECurrency {
+  USD = 'USD',
+  EUR = 'EUR',
+  PEN = 'PEN'
 }

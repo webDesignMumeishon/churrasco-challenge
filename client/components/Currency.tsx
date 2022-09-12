@@ -1,4 +1,5 @@
 import styles from '../styles/Currency.module.css'
+import {ECurrency} from '../types/products'
 
 type props = {
     handleCurrencyOnChange : (e : any) => void
@@ -6,11 +7,7 @@ type props = {
 
 const Currency : React.FC<props> = ({handleCurrencyOnChange}) => {
 
-    enum ECurrency {
-        USD = 'USD',
-        EUR = 'EUR',
-        PEN = 'PEN'
-    }
+  
 
     return (
         <div className={styles.checkboxContainer}>

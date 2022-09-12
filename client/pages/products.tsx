@@ -7,11 +7,8 @@ import ListProducts from '../components/ListProducts'
 import { useSelector } from 'react-redux';
 import { selectAuthState } from '../slices/authSlice';
 
-
 const Products: NextPage<{ list: IProducts }> = ({ list }: any) => {
   const authState: boolean = useSelector(selectAuthState);
-
-
   return (
     <div>
       <Header/>
