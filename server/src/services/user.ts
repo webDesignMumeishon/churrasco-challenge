@@ -1,23 +1,21 @@
 import { HydratedDocument } from 'mongoose';
 import { encrypt } from "../utils";
-import {LoginStatus} from '../enums/index'
 
 import { User as UserSchema } from "../models/user";
 import  IUser  from "../interfaces/user";
 
 export const getUserByLogin = async (login : string) => {
-    
-    const user = await UserSchema.findOne(
+    const user = await UserSchema.findOneAndUpdate(
         {
             $or: [
                 {email: login},
                 {username: login}
             ]
+        },
+        {
+            lastLogin: Date.now()
         }
     )
-
-
-
     return user
 }
 

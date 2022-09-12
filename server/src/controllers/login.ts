@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import Joi from 'joi';
+import { serialize } from "cookie";
 
 import { getUserByLogin } from '../services/user'
 import { compare } from "../utils/handleBcrypt";
 import {Role} from '../enums/index'
 import Validator from '../utils/joi_validator'
-import {LoginStatus} from '../enums/index'
 import CustomError from '../utils/errorHandler'
-import { serialize } from "cookie";
 
 const postLoginSchema = Joi.object()
   .keys({
@@ -61,10 +60,9 @@ export const login = async( req: Request, res: Response, next ) => {
 export const logout = async( req: Request, res: Response, next ) => {
 
   try{
-
     res.clearCookie("OursiteJWT");
     return res.status(200).json({msg:"cookie deleted"})
-
+    
   } catch (err) {
     next(err)
   }
@@ -72,11 +70,9 @@ export const logout = async( req: Request, res: Response, next ) => {
 
 
 const isAdminAndIsActive = (role : Role, active : boolean) : void => {
-
   if(role !== Role.ADMIN || !active){
     throw new CustomError('User is not an admin', 403)
   }
-
   if(!active){
     throw new CustomError('User is not active', 403)
   }

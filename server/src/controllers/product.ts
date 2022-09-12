@@ -12,6 +12,7 @@ import CustomError from '../utils/errorHandler'
 export const getProducts = async( req: Request, res: Response, next ) => {
 
   try{
+    console.log(req)
     return res.send({
       products: await getProductsDB()
     })

@@ -3,18 +3,18 @@
 		"alwaysStrict": true,
 		"esModuleInterop": true,
 		"outDir": "build/",
+		"typeRoots" : ["src/interfaces", "./node_modules/@types"],
 		"experimentalDecorators": true,
 		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true,
 		"sourceMap": true,
-		"moduleResolution": "Node",
+		// "moduleResolution": "Node",
 		"isolatedModules": true,
 		"target": "ES2020",
 		"module": "commonjs",
 		"baseUrl": ".",
 		"paths": {
 			"@root/*": ["./src/*"],
-
 			"@controllers": ["./src/controllers/"],
 			"@controllers/*": ["./src/controllers/*"],
 
@@ -23,7 +23,7 @@
 
 			"@utils/*": ["./src/utils/*"],
 			"@enums/*": ["./src/enums/*"],
-			"@interfaces/*": ["./src/interfaces/*"],
+			"@interfaces/*": ["src/interfaces/*"],
 
 
 			"@config": ["./src/config/"],

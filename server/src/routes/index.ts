@@ -9,5 +9,4 @@ export default (app: Express) => {
   app.use('/user', userRouter)
   app.use('/login', loginRouter)
   app.use('/product', productRouter)
-  
 }
