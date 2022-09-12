@@ -9,9 +9,9 @@ import { bufferToDataURI } from "../utils/file";
 import CustomError from '../utils/errorHandler'
 
 
-export const getProducts = async( req: Request, res: Response, next ) => {
+export const getProducts = async (req: Request, res: Response, next) => {
 
-  try{
+  try {
     return res.send({
       products: await getProductsDB()
     })
@@ -32,12 +32,12 @@ const postProductSchema = Joi.object()
   .required()
   .unknown(true);
 
-export const createProduct = async ( req: Request, res: Response, next: any) => {
-  try{
+export const createProduct = async (req: Request, res: Response, next: any) => {
+  try {
 
     const productFields = req.body
-    const {files} = req
-    
+    const { files } = req
+
     if (!files) {
       throw new CustomError('Images are required', 400)
     }
@@ -48,7 +48,7 @@ export const createProduct = async ( req: Request, res: Response, next: any) => 
     }
 
     const fileFormat = files[0].mimetype.split('/')[1]
-    const base64Values : string[] = []
+    const base64Values: string[] = []
     for (let i = 0; i < files.length; i++) {
       const { base64 } = bufferToDataURI(fileFormat, files[i].buffer)
       base64Values.push(base64)
@@ -57,7 +57,7 @@ export const createProduct = async ( req: Request, res: Response, next: any) => 
     const createdProduct = await insertProductDB(productFields, listOfUrls)
     return res.status(201).json(createdProduct)
   }
-  catch(e){
+  catch (e) {
     next(e)
   }
 }

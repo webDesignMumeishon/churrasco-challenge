@@ -4,7 +4,7 @@ import { serialize } from "cookie";
 
 import { getUserByLogin } from '../services/user'
 import { compare } from "../utils/handleBcrypt";
-import {Role} from '../enums/index'
+import { Role } from '../enums/index'
 import Validator from '../utils/joi_validator'
 import CustomError from '../utils/errorHandler'
 
@@ -21,9 +21,9 @@ interface LoginKeys {
   password: string;
 }
 
-export const login = async( req: Request, res: Response, next ) => {
+export const login = async (req: Request, res: Response, next) => {
 
-  try{
+  try {
     const bodyFields = req.body
     const validator = new Validator<LoginKeys>(postLoginSchema);
 
@@ -44,7 +44,7 @@ export const login = async( req: Request, res: Response, next ) => {
     isAdminAndIsActive(userInstance.role, userInstance.active)
 
     const token = userInstance.generateAuthToken();
-    
+
     const serialised = serialize('OursiteJWT', token, {
       httpOnly: true,
     })
@@ -57,21 +57,21 @@ export const login = async( req: Request, res: Response, next ) => {
   }
 }
 
-export const logout = async( req: Request, res: Response, next ) => {
-  try{
+export const logout = async (req: Request, res: Response, next) => {
+  try {
     res.clearCookie("OursiteJWT");
-    return res.status(200).json({msg:"cookie deleted"})
+    return res.status(200).json({ msg: "cookie deleted" })
   } catch (err) {
     next(err)
   }
 }
 
 
-const isAdminAndIsActive = (role : Role, active : boolean) : void => {
-  if(role !== Role.ADMIN || !active){
+const isAdminAndIsActive = (role: Role, active: boolean): void => {
+  if (role !== Role.ADMIN || !active) {
     throw new CustomError('User is not an admin', 403)
   }
-  if(!active){
+  if (!active) {
     throw new CustomError('User is not active', 403)
   }
 }
