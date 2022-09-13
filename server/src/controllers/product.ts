@@ -56,7 +56,6 @@ export const createProduct = async (req: Request, res: Response, next: any) => {
     return res.status(201).json(createdProduct)
   }
   catch (e) {
-    console.log(e)
     next(e)
   }
 }

@@ -1,15 +1,13 @@
 {
-  "name": "alquileres-app",
+  "name": "churrasco-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a challenge for churrasco",
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
     "start": "node build/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-    "nodemon": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "dev": "nodemon src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",

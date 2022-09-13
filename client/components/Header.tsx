@@ -9,15 +9,21 @@ const Header = () => {
     const manageLink = router.pathname === '/products' ? {name: 'Add Product', link: 'add'} : {name: 'Products', link: 'products'}
 
     const handleLogOut = async () => {
-        const result = await axios.delete("http://localhost:4000/login/logout", {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
+        try{
+            const result = await axios.delete("http://localhost:4000/login/logout", {
+                withCredentials: true,
+                headers: {
+                  'Content-Type': 'application/json',
+                }
+            })
+            if(result.status === 200){
+                router.push('/products')
             }
-        })
-        if(result.status === 200){
-            router.push('/products')
         }
+        catch(err){
+            alert(JSON.stringify(err))
+        }
+
     }
 
     return (

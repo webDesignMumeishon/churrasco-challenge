@@ -27,11 +27,11 @@ const AddProduct: NextPage = () => {
     })
 
     // handlers
-    const handleCurrencyOnChange = (e: any) => {
+    const handleCurrencyOnChange = (e: ChangeEvent<HTMLInputElement> ) => {
         setCurrency(e.target.value)
     }
 
-    const handleTextAreaOnChange = (e: any) => {
+    const handleTextAreaOnChange = (e: ChangeEvent<HTMLTextAreaElement> ) => {
         setTextAreaValue(e.target.value)
     }
 
