@@ -51,16 +51,24 @@ const Home: NextPage = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
-    const data = await axios.post("http://localhost:4000/login", logUser, {
-      withCredentials: true,
-      headers: {
+    try {
+      const data = await axios.post("http://localhost:4000/login", logUser, {
+        withCredentials: true,
+        headers: {
           'Content-Type': 'application/json'
+        }
+      })
+      if (data.status === 202) {
+        router.push('/products')
+        dispatch(setAuthState(true))
       }
-    })
-
-    if (data.status === 202) {
-      router.push('/products')
-      dispatch(setAuthState(true))
+    }
+    catch(err : any){
+      setLogUser({
+        login: '',
+        password: ''
+      })
+      alert(JSON.stringify(err.response.data))
     }
   }
 

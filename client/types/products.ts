@@ -24,3 +24,10 @@ export enum ECurrency {
   EUR = 'EUR',
   PEN = 'PEN'
 }
+
+export interface IProductInput {
+  sku: string
+  code: number
+  name: string
+  price: number
+}

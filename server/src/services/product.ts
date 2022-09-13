@@ -10,7 +10,7 @@ export const insertProductDB = async (product : IProduct, picturesUrls? : string
 
     const insertedProduct : HydratedDocument<IProduct> = new ProductSchema({
         SKU: product.SKU,
-        code: product.code,
+        code: Number(product.code),
         name: product.name,
         description: product.name,
         pictures: picturesUrls,

@@ -13,7 +13,6 @@ type props = {
 }
 
 const FieldInput : React.FC<props> = ({name, opcional = false, value, handleInput, type = 'text'}) => {
-
    return ( 
         <div className={styles.inputContainer}>
             <p>{name} {opcional ? <OptionalTag/> : null}</p>

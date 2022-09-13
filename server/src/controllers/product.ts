@@ -26,18 +26,16 @@ const postProductSchema = Joi.object()
     name: Joi.string().required(),
     price: Joi.string().required(),
     currency: Joi.string().required(),
-    code: Joi.number(),
-    description: Joi.string()
+    code: Joi.string().allow(null, ''),
+    description: Joi.string().allow(null, '')
   })
   .required()
   .unknown(true);
 
 export const createProduct = async (req: Request, res: Response, next: any) => {
   try {
-
     const productFields = req.body
     const { files } = req
-
     if (!files) {
       throw new CustomError('Images are required', 400)
     }
@@ -58,6 +56,7 @@ export const createProduct = async (req: Request, res: Response, next: any) => {
     return res.status(201).json(createdProduct)
   }
   catch (e) {
+    console.log(e)
     next(e)
   }
 }

@@ -8,14 +8,9 @@ import FieldInput from '../components/FieldInput'
 import OptionalTag from '../components/OptionalTag'
 import styles from '../styles/AddProduct.module.css'
 import Header from '../components/Header';
+import {IProductInput} from '../types/products'
 
 
-interface IProductInput {
-    sku: string
-    code: string
-    name: string
-    price: number
-}
 
 const AddProduct: NextPage = () => {
 
@@ -26,7 +21,7 @@ const AddProduct: NextPage = () => {
 
     const [productInputs, setProductsInputs] = useState<IProductInput>({
         sku: '',
-        code: '',
+        code: 0,
         name: '',
         price: 0
     })
@@ -55,53 +50,45 @@ const AddProduct: NextPage = () => {
         setFilesList([...files])
     }
 
-
     const handleOnSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        const bodyData = {
-            SKU : productInputs.sku,
-            code: productInputs.code,
-            name: productInputs.name,
-            description: textAreaValue,
-            pictures: filesList,
-            price: productInputs.price,
-            currency
+        if(filesList === null){
+            alert('Please upload some pictures')   
+            return
         }
-        const formData = new FormData()
 
+        const formData = new FormData()
         filesList.forEach((file : any) => {
             formData.append('image', file, file.name)
         });
         formData.append('SKU', productInputs.sku)
-        formData.append('code', productInputs.code)
+        formData.append('code', productInputs.code.toString())
         formData.append('name', productInputs.name)
         formData.append('description', textAreaValue)
         formData.append('price', productInputs.price.toString())
         formData.append('currency', currency)
 
-        const request = {
-          method: 'POST',
-          body: formData,
-          withCredentials: true,
-
-        };
-
-        const response = await axios.post("http://localhost:4000/product", formData,{
-            withCredentials: true,
-        })
-
-        if(response.status === 201){
-            setCurrency('USD')
-            setTextAreaValue('')
-            setFilesList(null)
-            setProductsInputs({
-                sku: '',
-                code: '',
-                name: '',
-                price: 0
+        try{
+            const response = await axios.post("http://localhost:4000/product", formData,{
+                withCredentials: true,
             })
-            alert('Product was created')
+    
+            if(response.status === 201){
+                setCurrency('USD')
+                setTextAreaValue('')
+                setFilesList(null)
+                setProductsInputs({
+                    sku: '',
+                    code: 0,
+                    name: '',
+                    price: 0
+                })
+                alert('Product was created')
+            }
+        }
+        catch(err : any){
+            alert(JSON.stringify(err.response.data))
         }
     }
 
@@ -120,6 +107,7 @@ const AddProduct: NextPage = () => {
                         <FieldInput
                             name={'Code'}
                             opcional={true}
+                            type={'number'}
                             value={productInputs.code}
                             handleInput={handleInputFieldOnChange}
                         />
