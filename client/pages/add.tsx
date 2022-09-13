@@ -77,7 +77,7 @@ const AddProduct: NextPage = () => {
             if(response.status === 201){
                 setCurrency('USD')
                 setTextAreaValue('')
-                setFilesList(null)
+                setFilesList([])
                 setProductsInputs({
                     sku: '',
                     code: 0,

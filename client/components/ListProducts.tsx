@@ -7,7 +7,6 @@ type props = {
 }
 
 const ListProducts: React.FC<props> = ({ products }) => {
-
   return (
     <div className={styles.container} >
       {products.map((p: IProduct) => {

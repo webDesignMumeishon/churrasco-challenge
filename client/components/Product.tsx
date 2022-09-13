@@ -1,6 +1,5 @@
 import { IProduct } from '../types/products'
 import { ECurrency } from '../types/products'
-
 import styles from '../styles/Product.module.css'
 
 type props = {
@@ -13,14 +12,14 @@ const Product: React.FC<props> = ({ product }) => {
 
   return (
     <div className={styles.cardContainer}>
-      <p className={styles.skuNumber}>#{product.SKU}</p>
+      <p className={styles.skuNumber}>#{product.SKU || 'NotFound'}</p>
       <div className={styles.imgContainer}>
         <img className={styles.imgStyle} src={mainImage} alt="Image" />
       </div>
       <div className={styles.infoContainer}>
         <p className={styles.productName}>{product.name}</p>
-        <p>Code: <span className={styles.codeLabel}>{product.code || 'INVALID'}</span></p>
-        <p>Price: ${product.price} {validCurrencies.includes(product.currency as ECurrency) || ECurrency.PEN} </p>
+        <p>Code: <span className={styles.codeLabel}>{product.code || 'NotFound'}</span></p>
+        <p>Price: ${product.price} {validCurrencies.includes(product.currency as ECurrency) ? product.currency : ECurrency.PEN} </p>
       </div>
     </div>
   )
